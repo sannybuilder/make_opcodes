@@ -1,0 +1,8 @@
+0000: nop
+  0001: wait
+
+
+terminate_this_script
+
+player.money($player) += 1
+player.controllable(0)
