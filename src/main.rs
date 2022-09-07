@@ -4,7 +4,6 @@ use argh::FromArgs;
 use sb::dictionary::dictionary_num_by_str::DictNumByStr;
 use sb::dictionary::ffi::*;
 use sb::namespaces::namespaces::Namespaces;
-use std::ffi::CString;
 
 #[derive(FromArgs)]
 ///
@@ -33,14 +32,14 @@ fn main() {
             let file_content = String::from_utf8_lossy(&buf);
             let mut uniq_opcodes: Vec<String> = vec![];
             let mut output = vec![];
-            let mut keywords = DictNumByStr::new(
-                Duplicates::Replace,
-                CaseFormat::LowerCase,
-                String::from(";"),
-                String::from("=,"),
-                true,
-                true,
-            );
+
+            let mut builder = sb::dictionary::config::ConfigBuilder::new();
+
+            builder
+                .set_case_format(CaseFormat::LowerCase)
+                .set_hex_keys(true);
+
+            let mut keywords = DictNumByStr::new(builder.build());
             let mut classes = Namespaces::new();
 
             let has_keywords = keywords
@@ -76,13 +75,11 @@ fn main() {
                 {
                     // keyword
                     if has_keywords {
-                        if let Some(key) = CString::new(first_word.clone()).ok() {
-                            if keywords.map.contains_key(&key) {
-                                if !uniq_opcodes.contains(&first_word) {
-                                    uniq_opcodes.push(first_word);
-                                    output.push(line);
-                                    continue;
-                                }
+                        if keywords.map.contains_key(&first_word) {
+                            if !uniq_opcodes.contains(&first_word) {
+                                uniq_opcodes.push(first_word);
+                                output.push(line);
+                                continue;
                             }
                         }
                     }

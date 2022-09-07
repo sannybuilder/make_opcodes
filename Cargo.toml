@@ -1,11 +1,11 @@
 [package]
 name = "make_opcodes"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Seemann <mail@sannybuilder.com>"]
-edition = "2018"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 sanny_builder_core = { git = "https://github.com/sannybuilder/core", branch = "master", package = "sanny_builder_core" }
-argh = "0.1.4"
+argh = "0.1.8"
