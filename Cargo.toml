@@ -8,4 +8,4 @@ edition = "2021"
 
 [dependencies]
 sanny_builder_core = { git = "https://github.com/sannybuilder/core", branch = "master", package = "sanny_builder_core" }
-argh = "0.1.8"
+argh = "0.1.12"
